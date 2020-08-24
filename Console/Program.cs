@@ -7,6 +7,7 @@ namespace Staffs
         static void Main(string[] args)
         {
             string select;
+            JsonStaffOperations Staffs=new JsonStaffOperations();
             do
             {
                 Console.WriteLine("\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
@@ -14,25 +15,22 @@ namespace Staffs
                 switch (select)
                 {
                     case "1":
-                        StaffOperations.EnterData();
+                        Staffs.EnterData();
                         break;
                     case "2":
-                        StaffOperations.View();
+                        Staffs.View();
                         break;
                     case "3":
-                        Console.WriteLine("ENTER THE STAFF id");
-                        int viewid = Convert.ToInt32(Console.ReadLine());
-                        StaffOperations.ViewOne(viewid);
+                        int viewid =StaffOperations.ReturnId();
+                        Staffs.ViewOne(viewid);
                         break;
                     case "4":
-                        Console.WriteLine("ENTER THE STAFF id");
-                        int deleteid = Convert.ToInt32(Console.ReadLine());
-                        StaffOperations.Delete(deleteid);
+                        int deleteid = StaffOperations.ReturnId();
+                        Staffs.Delete(deleteid);
                         break;
                     case "5":
-                        Console.WriteLine("ENTER THE STAFF id");
-                        int updateid = Convert.ToInt32(Console.ReadLine());
-                        StaffOperations.UpdateData(updateid);
+                        int updateid = StaffOperations.ReturnId();
+                        Staffs.Update(updateid);
                         break;
                     case "9":
                         Console.WriteLine("PROGRAM ENDED");
