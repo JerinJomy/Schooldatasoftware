@@ -11,6 +11,10 @@ namespace Staffs
             ClassName = classname;
             Subject = subject;
         }
+        public TeachingStaffs()
+        {
+            
+        }
 
         public void UpdateTeaching(string name, string phone, string email, string classname, string subject)
         {

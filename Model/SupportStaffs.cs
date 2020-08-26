@@ -8,6 +8,10 @@ namespace Staffs
         {
             Designation = designation;
         }
+        public SupportStaffs()
+        {
+            
+        }
         public void UpdateSupport(string name, string phone, string email, string desgnation)
         {
             base.Update(name, phone, email);

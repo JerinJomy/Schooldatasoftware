@@ -1,3 +1,21 @@
-{"Designation":"a","Name":"a","StaffType":2,"Phone":"a","Email":"a","Id":1}
-{"Designation":"s","Name":"s","StaffType":3,"Phone":"s","Email":"s","Id":2}
-{"Designation":"s","Name":"jer","StaffType":2,"Phone":"s","Email":"s","Id":3}
+[
+  {
+    "$type": "Staffs.TeachingStaffs, Model",
+    "ClassName": "a",
+    "Subject": "a",
+    "Name": "a",
+    "StaffType": 1,
+    "Phone": "a",
+    "Email": "a",
+    "Id": 1
+  },
+  {
+    "$type": "Staffs.SupportStaffs, Model",
+    "Designation": "c",
+    "Name": "c",
+    "StaffType": 3,
+    "Phone": "c",
+    "Email": "c",
+    "Id": 2
+  }
+]

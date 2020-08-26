@@ -7,30 +7,36 @@ namespace Staffs
         static void Main(string[] args)
         {
             string select;
-            JsonStaffOperations Staffs=new JsonStaffOperations();
+
             do
             {
-                Console.WriteLine("\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
+                Console.WriteLine("\nEnter 'j' to use JOSN file\nEnter 'x' to use XML file\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
                 select = Console.ReadLine();
                 switch (select)
                 {
+                    case "j":
+                        JsonStaffOperations.JsonProgram();
+                        break;
+                    case "x":
+                        XmlStaffOperations.XMLProgram();
+                        break;
                     case "1":
-                        Staffs.EnterData();
+                        StaffOperations.EnterData();
                         break;
                     case "2":
-                        Staffs.View();
+                        StaffOperations.View();
                         break;
                     case "3":
-                        int viewid =StaffOperations.ReturnId();
-                        Staffs.ViewOne(viewid);
+                        int viewid = StaffOperations.ReturnId();
+                        StaffOperations.ViewOne(viewid);
                         break;
                     case "4":
                         int deleteid = StaffOperations.ReturnId();
-                        Staffs.Delete(deleteid);
+                        StaffOperations.Delete(deleteid);
                         break;
                     case "5":
                         int updateid = StaffOperations.ReturnId();
-                        Staffs.Update(updateid);
+                        StaffOperations.UpdateData(updateid);
                         break;
                     case "9":
                         Console.WriteLine("PROGRAM ENDED");
@@ -45,3 +51,4 @@ namespace Staffs
         }
     }
 }
+

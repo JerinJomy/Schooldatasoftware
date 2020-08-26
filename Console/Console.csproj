@@ -9,6 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <Content Include="XmlStaffOperations.cs" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

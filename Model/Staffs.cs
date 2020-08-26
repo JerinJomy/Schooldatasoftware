@@ -21,6 +21,10 @@ namespace Staffs
             Id = id;
 
         }
+        public Staffs()
+            {
+
+            }
         public void Update(string name, string phone, string email)
         {
 

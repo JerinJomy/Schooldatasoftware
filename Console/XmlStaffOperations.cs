@@ -1,50 +1,23 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.Linq;
+
 namespace Staffs
 {
-    public class JsonStaffOperations : IStaffOperations
+    public class XmlStaffOperations : IStaffOperations
     {
-        string filepath = @"C:\Users\jerin\Documents\rckr\Firstproject\staff.json";
-        private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-        string tempfile = "temp.json";
-        public void EnterData()
-        {
-            if (File.Exists(filepath))
-            {
-                string Jsonstring = File.ReadAllText(filepath);
-                List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-                Staffs staff = EnterStaff();
-                StaffList.Add(staff);
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, string.Empty);
-                File.WriteAllText(filepath, jsonline);
-            }
-            else
-            {
-                List<Staffs> StaffList = new List<Staffs>();
-                Staffs staff = EnterStaff();
-                StaffList.Add(staff);
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, jsonline);
-            }
-
-        }
-        public void View()
-        {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> Stafflist = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-            foreach (Staffs staff in Stafflist)
-            {
-                StaffOperations.Display(staff);
-            }
-        }
+        // XML XML = new XML();
+        String Xmlfile = @"C:\Users\jerin\Documents\rckr\Firstproject\staff.xml";
+        List<Staffs> StaffList = new List<Staffs>();
         public void Delete(int id)
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
+            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+            xmlfilestream.Close();
             int index = StaffList.FindIndex(s => (s.Id == id));
             if (index == -1)
             {
@@ -54,17 +27,48 @@ namespace Staffs
             else
             {
                 StaffList.RemoveAt(index);
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, jsonline);
+                TextWriter xmlwriter = new StreamWriter(Xmlfile);
+                serializer.Serialize(xmlwriter, StaffList);
+                xmlwriter.Close();
                 Console.WriteLine("entry deleted");
+            }
+
+        }
+
+        public void EnterData()
+        {
+            if (File.Exists(Xmlfile))
+            {
+                Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+                var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+                StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+                xmlfilestream.Close();
+                Staffs staff = EnterStaff();
+                StaffList.Add(staff);
+                TextWriter xmlwriter = new StreamWriter(Xmlfile);
+                serializer.Serialize(xmlwriter, StaffList);
+                xmlwriter.Close();
+            }
+            else
+            {
+                Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+                Staffs staff = EnterStaff();
+                StaffList.Add(staff);
+                TextWriter xmlwriter = new StreamWriter(Xmlfile);
+                serializer.Serialize(xmlwriter, StaffList);
+                xmlwriter.Close();
             }
         }
 
-
         public void Update(int id)
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
+            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+            xmlfilestream.Close();
             int index = StaffList.FindIndex(s => (s.Id == id));
             if (index == -1)
             {
@@ -99,14 +103,34 @@ namespace Staffs
                         ((SupportStaffs)StaffList[index]).UpdateSupport(name, phone, email, designation1);
                         break;
                 }
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, jsonline);
+                TextWriter xmlwriter = new StreamWriter(Xmlfile);
+                serializer.Serialize(xmlwriter, StaffList);
+                xmlwriter.Close();
+            }
+
+
+        }
+
+        public void View()
+        {
+            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+            StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+            xmlfilestream.Close();
+            foreach (Staffs staff in StaffList)
+            {
+                StaffOperations.Display(staff);
             }
         }
+
         public void ViewOne(int id)
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
+            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+            xmlfilestream.Close();
             Staffs staff = StaffList.FirstOrDefault(x => x.Id == id);
             if (staff == null)
             {
@@ -164,11 +188,14 @@ namespace Staffs
         public static int IdValue()
         {
             int largest = 0;
-            string filepath = @"C:\Users\jerin\Documents\rckr\Firstproject\staff.json";
+            String Xmlfile = @"C:\Users\jerin\Documents\rckr\Firstproject\staff.xml";
             try
             {
-                string Jsonstring = File.ReadAllText(filepath);
-                List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring);
+                Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+                var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+                List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+                xmlfilestream.Close();
                 if (StaffList.Count == 0)
                 {
                     return 1;
@@ -189,11 +216,12 @@ namespace Staffs
             {
                 return 1;
             }
+
         }
-        public static void JsonProgram()
+       public static void XMLProgram()
         {
             string select;
-            IStaffOperations Staff = new JsonStaffOperations();
+            IStaffOperations Staff = new XmlStaffOperations();
             do
             {
                 Console.WriteLine("\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
@@ -226,6 +254,7 @@ namespace Staffs
                         break;
                 }
             }  while (select != "9"); 
-        }
+        } 
     }
+
 }

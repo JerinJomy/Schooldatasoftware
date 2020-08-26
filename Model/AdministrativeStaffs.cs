@@ -8,6 +8,10 @@ namespace Staffs
         {
             Designation = designation;
         }
+        public AdministrativeStaff()
+        {
+            
+        }
         public void UpdateAdministrative(string name, string phone, string email, string designation)
         {
             base.Update(name, phone, email);
