@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 
 namespace Staffs
 {
@@ -6,8 +7,8 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
+            
             string select;
-
             do
             {
                 Console.WriteLine("\nEnter 'j' to use JOSN file\nEnter 'x' to use XML file\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
@@ -15,10 +16,10 @@ namespace Staffs
                 switch (select)
                 {
                     case "j":
-                        JsonStaffOperations.JsonProgram();
+                        FileOperations.JsonProgram();
                         break;
                     case "x":
-                        XmlStaffOperations.XMLProgram();
+                        FileOperations.XMLProgram();
                         break;
                     case "1":
                         StaffOperations.EnterData();

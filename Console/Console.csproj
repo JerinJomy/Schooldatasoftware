@@ -9,7 +9,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <Content Include="XmlStaffOperations.cs" />
+    <Content Include="FileOperations.cs" />
+    <Content Include="App.config" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
