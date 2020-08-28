@@ -8,5 +8,6 @@ namespace Staffs
         void ViewOne(int id);
         void Update(int id);
         void Delete(int id);
+        void Deserialize();
     }
 }

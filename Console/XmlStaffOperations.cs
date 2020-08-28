@@ -9,137 +9,49 @@ namespace Staffs
 {
     public class XmlStaffOperations : IStaffOperations
     {
-        String Xmlfile = ConfigurationManager.AppSettings["Xmlfile"];
+        static Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
+        static XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+        static List<Staffs> StaffList = ReturnList();
+
         public void Delete(int id)
         {
-            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
-            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
-            xmlfilestream.Close();
-            int index = StaffList.FindIndex(s => (s.Id == id));
-            if (index == -1)
-            {
-                Console.WriteLine("NO STAFF AT THIS ID");
-            }
+            StaffOperations.Delete(id, StaffList);
+        }
 
-            else
-            {
-                StaffList.RemoveAt(index);
-                TextWriter xmlwriter = new StreamWriter(Xmlfile);
-                serializer.Serialize(xmlwriter, StaffList);
-                xmlwriter.Close();
-                Console.WriteLine("entry deleted");
-            }
-
+        public void Deserialize()
+        {
+            TextWriter xmlwriter = new StreamWriter(ConfigurationManager.AppSettings["Xmlfile"]);
+            serializer.Serialize(xmlwriter, StaffList);
+            xmlwriter.Close();
         }
 
         public void EnterData()
         {
-            if (File.Exists(Xmlfile))
-            {
-                Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-                var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
-                List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
-                xmlfilestream.Close();
-                Staffs staff = FileOperations.XMLEnterStaff();
-                StaffList.Add(staff);
-                TextWriter xmlwriter = new StreamWriter(Xmlfile);
-                serializer.Serialize(xmlwriter, StaffList);
-                xmlwriter.Close();
-            }
-            else
-            {
-                Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-                Staffs staff = FileOperations.XMLEnterStaff();
-                List<Staffs> StaffList=new List<Staffs>();
-                StaffList.Add(staff);
-                TextWriter xmlwriter = new StreamWriter(Xmlfile);
-                serializer.Serialize(xmlwriter, StaffList);
-                xmlwriter.Close();
-            }
+            StaffList.Add(StaffOperations.EnterData(StaffList));
         }
 
         public void Update(int id)
         {
-            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
-            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
-            xmlfilestream.Close();
-            int index = StaffList.FindIndex(s => (s.Id == id));
-            TextWriter xmlwriter = new StreamWriter(Xmlfile);
-            serializer.Serialize(xmlwriter, FileOperations.UpdateStaff(StaffList, index));
-            xmlwriter.Close();
+            StaffOperations.UpdateData(id, StaffList);
         }
 
         public void View()
         {
-            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
-            Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
-            xmlfilestream.Close();
-            foreach (Staffs staff in StaffList)
-            {
-                StaffOperations.Display(staff);
-            }
+            StaffOperations.View(StaffList);
         }
 
         public void ViewOne(int id)
         {
-            var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
+            StaffOperations.ViewOne(id, StaffList);
+        }
+        public static List<Staffs> ReturnList()
+        {
             Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
             XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
+            FileStream xmlfilestream = new FileStream(ConfigurationManager.AppSettings["Xmlfile"], FileMode.Open);
             List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
             xmlfilestream.Close();
-            Staffs staff = StaffList.FirstOrDefault(x => x.Id == id);
-            if (staff == null)
-            {
-                Console.WriteLine("NO STAFF WITH THIS ID");
-            }
-            else
-            {
-
-                StaffOperations.Display(staff);
-            }
-        }
-
-        public static int IdValue()
-        {
-            int largest = 0;
-            String Xmlfile = ConfigurationManager.AppSettings["Xmlfile"];
-            try
-            {
-                Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-                var xmlfilestream = new FileStream(Xmlfile, FileMode.Open);
-                List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
-                xmlfilestream.Close();
-                Console.WriteLine(StaffList.Count);
-                if (StaffList.Count == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    foreach (Staffs s in StaffList)
-                    {
-                        if (s.Id > largest)
-                        {
-                            largest = s.Id;
-                        }
-                    }
-                    return largest + 1;
-                }
-            }
-            catch
-            {
-                return 1;
-            }
+            return StaffList;
         }
     }
-
 }

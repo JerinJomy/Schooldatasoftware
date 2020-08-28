@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Configuration;
+
+using System.Collections.Generic;
 
 namespace Staffs
 {
@@ -7,39 +8,35 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
-            
+            IStaffOperations staff=new XmlStaffOperations();
+            List<Staffs> StaffList = new List<Staffs>();
             string select;
             do
             {
-                Console.WriteLine("\nEnter 'j' to use JOSN file\nEnter 'x' to use XML file\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
+                Console.WriteLine("\nENTER '1' FOR DATA ENTRY\nENTER '2' TO VIEW  DETAILS OF ALL STAFF\nENTER '3' TO VIEW STAFF DETAILS IN SPECIFIC\nENTER '4' TO DELETE STAFF DETAILS\nENTER '5' TO UPDATE STAFF DETAILS \nENTER '9' TO EXIT");
                 select = Console.ReadLine();
                 switch (select)
                 {
-                    case "j":
-                        FileOperations.JsonProgram();
-                        break;
-                    case "x":
-                        FileOperations.XMLProgram();
-                        break;
                     case "1":
-                        StaffOperations.EnterData();
+                        staff.EnterData();
                         break;
                     case "2":
-                        StaffOperations.View();
+                        staff.View();
                         break;
                     case "3":
                         int viewid = StaffOperations.ReturnId();
-                        StaffOperations.ViewOne(viewid);
+                        staff.ViewOne(viewid);
                         break;
                     case "4":
                         int deleteid = StaffOperations.ReturnId();
-                        StaffOperations.Delete(deleteid);
+                        staff.Delete(deleteid);
                         break;
                     case "5":
                         int updateid = StaffOperations.ReturnId();
-                        StaffOperations.UpdateData(updateid);
+                        staff.Update(updateid);
                         break;
                     case "9":
+                        staff.Deserialize();
                         Console.WriteLine("PROGRAM ENDED");
                         break;
                     default:

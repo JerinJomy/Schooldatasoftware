@@ -8,4 +8,12 @@
     <Id>1</Id>
     <Designation>q</Designation>
   </Staffs>
+  <Staffs xsi:type="AdministrativeStaff">
+    <Name>b</Name>
+    <StaffType>ADMINISTRATIVESTAFF</StaffType>
+    <Phone>b</Phone>
+    <Email>b</Email>
+    <Id>2</Id>
+    <Designation>b</Designation>
+  </Staffs>
 </ArrayOfStaffs>

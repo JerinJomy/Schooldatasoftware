@@ -17,5 +17,14 @@
     "Phone": "c",
     "Email": "c",
     "Id": 2
+  },
+  {
+    "$type": "Staffs.AdministrativeStaff, Model",
+    "Designation": "z",
+    "Name": "z",
+    "StaffType": 2,
+    "Phone": "z",
+    "Email": "z",
+    "Id": 3
   }
 ]

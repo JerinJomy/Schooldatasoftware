@@ -8,111 +8,34 @@ namespace Staffs
 {
     public class JsonStaffOperations : IStaffOperations
     {
-        string filepath =ConfigurationManager.AppSettings["Jsonfile"];
-        private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-        string tempfile =ConfigurationManager.AppSettings["tempfile"];
+        static private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+        static string Jsonstring = File.ReadAllText(ConfigurationManager.AppSettings["Jsonfile"]);
+        List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
         public void EnterData()
         {
-            if (File.Exists(filepath))
-            {
-                string Jsonstring = File.ReadAllText(filepath);
-                List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-                Staffs staff = FileOperations.JsonEnterStaff();
-                StaffList.Add(staff);
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, string.Empty);
-                File.WriteAllText(filepath, jsonline);
-            }
-            else
-            {
-                List<Staffs> StaffList = new List<Staffs>();
-                Staffs staff = FileOperations.JsonEnterStaff();
-                StaffList.Add(staff);
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, jsonline);
-            }
-
+            StaffList.Add(StaffOperations.EnterData(StaffList));
         }
         public void View()
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> Stafflist = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-            foreach (Staffs staff in Stafflist)
-            {
-                StaffOperations.Display(staff);
-            }
+            StaffOperations.View(StaffList);
         }
         public void Delete(int id)
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-            int index = StaffList.FindIndex(s => (s.Id == id));
-            if (index == -1)
-            {
-                Console.WriteLine("NO STAFF AT THIS ID");
-            }
-
-            else
-            {
-                StaffList.RemoveAt(index);
-                string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, jsonline);
-                Console.WriteLine("entry deleted");
-            }
+            StaffOperations.Delete(id, StaffList);
         }
-
-
         public void Update(int id)
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-            int index = StaffList.FindIndex(s => (s.Id == id));
-                string jsonline = JsonConvert.SerializeObject(FileOperations.UpdateStaff(StaffList,index).ToArray(), Formatting.Indented, settings);
-                File.WriteAllText(filepath, jsonline);
+            StaffOperations.UpdateData(id, StaffList);
         }
         public void ViewOne(int id)
         {
-            string Jsonstring = File.ReadAllText(filepath);
-            List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-            Staffs staff = StaffList.FirstOrDefault(x => x.Id == id);
-            if (staff == null)
-            {
-                Console.WriteLine("NO STAFF WITH THIS ID");
-            }
-            else
-            {
-
-                StaffOperations.Display(staff);
-            }
+            StaffOperations.ViewOne(id, StaffList);
         }
-    public static int IdValue()
+        public void Deserialize()
         {
-            int largest = 0;
-            string filepath =ConfigurationManager.AppSettings["Jsonfile"];
-            try
-            {
-                string Jsonstring = File.ReadAllText(filepath);
-                List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring);
-                if (StaffList.Count == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    foreach (Staffs s in StaffList)
-                    {
-                        if (s.Id > largest)
-                        {
-                            largest = s.Id;
-                        }
-                    }
-                    return largest + 1;
-                }
-            }
-            catch
-            {
-                return 1;
-            }
+            string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
+            File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], string.Empty);
+            File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], jsonline);
         }
     }
 }

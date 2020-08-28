@@ -10,8 +10,7 @@ namespace Staffs
     public static class StaffOperations
     {
 
-        public static List<Staffs> StaffList = new List<Staffs> { };
-        public static int IdValue()
+        public static int IdValue(List<Staffs> StaffList)
         {
             int largest = 0;
             if (StaffList.Count == 0)
@@ -31,7 +30,7 @@ namespace Staffs
             }
 
         }
-        public static void EnterData()
+        public static Staffs EnterData(List<Staffs> StaffList)
         {
             Console.WriteLine("enter '1' for Teaching Staff\nenter '2' for Administrative Staff\nenter '3' for Support Staff");
             string stype = Console.ReadLine();
@@ -49,28 +48,33 @@ namespace Staffs
                 classname = Console.ReadLine();
                 Console.WriteLine("enter the subject taught");
                 subject = Console.ReadLine();
-                int id = StaffOperations.IdValue();
-                StaffList.Add(new TeachingStaffs(stafftype, name, phone, email, classname, subject, id));
+                int id = StaffOperations.IdValue(StaffList);
+                Staffs Staff = new TeachingStaffs(stafftype, name, phone, email, classname, subject, id);
+                return Staff;
             }
             else if (stafftype == StaffType.ADMINISTRATIVESTAFF)
             {
                 Console.WriteLine("Enter the designation of the staff");
                 string designation = Console.ReadLine();
-                int id = StaffOperations.IdValue();
-                StaffList.Add(new AdministrativeStaff(stafftype, name, phone, email, id, designation));
+                int id = StaffOperations.IdValue(StaffList);
+                Staffs staff = new AdministrativeStaff(stafftype, name, phone, email, id, designation);
+                return staff;
             }
             else if (stafftype == StaffType.SUPPORTSTAFF)
             {
                 Console.WriteLine("Enter the designation of the staff");
                 string designation = Console.ReadLine();
-                int id = StaffOperations.IdValue();
-                StaffList.Add(new SupportStaffs(stafftype, name, phone, email, id, designation));
+                int id = StaffOperations.IdValue(StaffList);
+                Staffs staff = new SupportStaffs(stafftype, name, phone, email, id, designation);
+                return staff;
             }
-
-
+            else
+            {
+                return null;
+            }
         }
 
-        public static void View()
+        public static void View(List<Staffs> StaffList)
         {
             if (StaffList.Count < 1)
             {
@@ -87,7 +91,7 @@ namespace Staffs
             }
         }
 
-        public static void ViewOne(int viewid)
+        public static void ViewOne(int viewid,List<Staffs> StaffList)
         {
             Staffs staff = StaffList.FirstOrDefault(x => x.Id == viewid);
             if (staff == null)
@@ -101,7 +105,7 @@ namespace Staffs
             }
         }
 
-        public static void UpdateData(int updateid)
+        public static void UpdateData(int updateid,List<Staffs> StaffList)
         {
             int index = StaffList.FindIndex(s => (s.Id == updateid));
             if (index == -1)
@@ -140,7 +144,7 @@ namespace Staffs
             }
         }
 
-        public static void Delete(int delteid)
+        public static void Delete(int delteid, List<Staffs> StaffList)
         {
             int index = StaffList.FindIndex(s => (s.Id == delteid));
             if (index == -1)
