@@ -1,6 +1,7 @@
 ﻿using System;
-
+using System.Reflection;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace Staffs
 {
@@ -8,7 +9,9 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
-            IStaffOperations staff=new XmlStaffOperations();
+            string objectselect = ConfigurationManager.AppSettings.Get("xmlpath");
+            var objectType = Type.GetType(objectselect);
+            IStaffOperations staff=Activator.CreateInstance(objectType) as IStaffOperations;
             List<Staffs> StaffList = new List<Staffs>();
             string select;
             do
