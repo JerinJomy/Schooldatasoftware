@@ -9,9 +9,12 @@ namespace Staffs
 {
     public class XmlStaffOperations : IStaffOperations
     {
+        public XmlStaffOperations()
+        {
+        }
         static Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
         static XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-        static List<Staffs> StaffList = ReturnList();
+         List<Staffs> StaffList = ReturnList();
 
         public void Delete(int id)
         {
@@ -46,12 +49,26 @@ namespace Staffs
         }
         public static List<Staffs> ReturnList()
         {
+            if (!File.Exists(ConfigurationManager.AppSettings["xmlfile"]))
+            {
+                TextWriter tw = new StreamWriter(ConfigurationManager.AppSettings["xmlfile"]);
+                tw.Close();
+            }
             Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
             XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
             FileStream xmlfilestream = new FileStream(ConfigurationManager.AppSettings["Xmlfile"], FileMode.Open);
-            List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
-            xmlfilestream.Close();
-            return StaffList;
+            try
+            {
+                List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+                xmlfilestream.Close();
+                return StaffList;
+            }
+            catch
+            {
+                List<Staffs> StaffList= new List<Staffs>();
+                xmlfilestream.Close();
+                return StaffList;
+            }
         }
     }
 }

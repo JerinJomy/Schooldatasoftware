@@ -9,7 +9,7 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
-            string objectselect = ConfigurationManager.AppSettings.Get("xmlpath");
+            string objectselect = ConfigurationManager.AppSettings.Get("json");
             var objectType = Type.GetType(objectselect);
             IStaffOperations staff=Activator.CreateInstance(objectType) as IStaffOperations;
             List<Staffs> StaffList = new List<Staffs>();

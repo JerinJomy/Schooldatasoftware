@@ -13,6 +13,7 @@
     <Content Include="XmlStaffOperations.cs" />
     <Content Include="FileOperations.cs" />
     <Content Include="App.config" />
+    <Content Include="Staffs.XmlStaffOperations,Console" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

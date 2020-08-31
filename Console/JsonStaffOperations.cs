@@ -9,8 +9,7 @@ namespace Staffs
     public class JsonStaffOperations : IStaffOperations
     {
         static private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-        static string Jsonstring = File.ReadAllText(ConfigurationManager.AppSettings["Jsonfile"]);
-        List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
+        List<Staffs> StaffList = ReturnList();
         public void EnterData()
         {
             StaffList.Add(StaffOperations.EnterData(StaffList));
@@ -36,6 +35,26 @@ namespace Staffs
             string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
             File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], string.Empty);
             File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], jsonline);
+        }
+
+        public static List<Staffs> ReturnList()
+        {
+            if (!File.Exists(ConfigurationManager.AppSettings["Jsonfile"]))
+            {
+                TextWriter tw = new StreamWriter(ConfigurationManager.AppSettings["xmlfile"]);
+                tw.Close();
+            }
+            try
+            {
+                string Jsonstring = File.ReadAllText(ConfigurationManager.AppSettings["Jsonfile"]);
+                List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
+                return StaffList;
+            }
+            catch
+            {
+                List<Staffs> StaffList= new List<Staffs>();
+                return StaffList;
+            }
         }
     }
 }
