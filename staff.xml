@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfStaffs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Staffs xsi:type="SupportStaffs">
+    <Name>z</Name>
+    <StaffType>SUPPORTSTAFF</StaffType>
+    <Phone>z</Phone>
+    <Email>z</Email>
+    <Id>2</Id>
+    <Designation>z</Designation>
+  </Staffs>
+  <Staffs xsi:type="TeachingStaffs">
+    <Name>q</Name>
+    <StaffType>TEACHINGSTAFF</StaffType>
+    <Phone>q</Phone>
+    <Email>q</Email>
+    <Id>3</Id>
+    <ClassName>q</ClassName>
+    <Subject>q</Subject>
+  </Staffs>
+</ArrayOfStaffs>

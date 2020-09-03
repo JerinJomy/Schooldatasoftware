@@ -30,7 +30,7 @@ namespace Staffs
         {
             StaffOperations.ViewOne(id, StaffList);
         }
-        public void Deserialize()
+        public void WriteData()
         {
             string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
             File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], string.Empty);

@@ -10,7 +10,7 @@ namespace Staffs
     public static class StaffOperations
     {
 
-        public static int IdValue(List<Staffs> StaffList)
+        private static int IdValue(List<Staffs> StaffList)
         {
             int largest = 0;
             if (StaffList.Count == 0)
@@ -19,13 +19,7 @@ namespace Staffs
             }
             else
             {
-                foreach (Staffs s in StaffList)
-                {
-                    if (s.Id > largest)
-                    {
-                        largest = s.Id;
-                    }
-                }
+                largest = StaffList.Max(x => x.Id);
                 return largest + 1;
             }
 

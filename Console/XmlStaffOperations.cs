@@ -14,14 +14,14 @@ namespace Staffs
         }
         static Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
         static XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-         List<Staffs> StaffList = ReturnList();
+        List<Staffs> StaffList = ReturnList();
 
         public void Delete(int id)
         {
             StaffOperations.Delete(id, StaffList);
         }
 
-        public void Deserialize()
+        public void WriteData()
         {
             TextWriter xmlwriter = new StreamWriter(ConfigurationManager.AppSettings["Xmlfile"]);
             serializer.Serialize(xmlwriter, StaffList);

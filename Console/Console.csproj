@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\ClassDataBase\ClassDataBase.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\StaffDataBase\ClassLibrary1\StaffDataBase.csproj" />
     <Content Include="JsonStaffOperations.cs" />
     <Content Include="Program.cs" />
     <Content Include="StaffOperations.cs" />

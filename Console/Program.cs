@@ -21,14 +21,14 @@ namespace Staffs
                 switch (select)
                 {
                     case "1":
-                        staff.EnterData();
+                        StaffDB.EnterData();
                         break;
                     case "2":
-                        staff.View();
+                        StaffDB.View();
                         break;
                     case "3":
                         int viewid = StaffOperations.ReturnId();
-                        staff.ViewOne(viewid);
+                        StaffDB.ViewOne(viewid);
                         break;
                     case "4":
                         int deleteid = StaffOperations.ReturnId();
@@ -39,7 +39,7 @@ namespace Staffs
                         staff.Update(updateid);
                         break;
                     case "9":
-                        staff.Deserialize();
+                        staff.WriteData();
                         Console.WriteLine("PROGRAM ENDED");
                         break;
                     default:
