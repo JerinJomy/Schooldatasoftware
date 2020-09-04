@@ -1,7 +1,7 @@
 using System;
 namespace Staffs
 {
-    interface IStaffOperations
+    public interface IStaffOperations
     {
         void EnterData();
         void View();
