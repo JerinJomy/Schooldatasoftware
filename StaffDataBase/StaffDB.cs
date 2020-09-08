@@ -35,95 +35,78 @@ namespace Staffs
 
         public void WriteData()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring"));
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("ClearTable", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter adap = new SqlDataAdapter();
-            adap.InsertCommand = new SqlCommand("ClearTable", conn);
-            adap.InsertCommand.ExecuteNonQuery();
-            cmd.Dispose();
-            adap.Dispose();
-            int staffno_a = 1, staffno_t = 1, staffno_s = 1;
+            
+            DataTable StaffTable = new DataTable();
+            StaffTable.Columns.Add("staffid", typeof(int));
+            StaffTable.Columns.Add("typeno", typeof(int));
+            StaffTable.Columns.Add("name", typeof(string));
+            StaffTable.Columns.Add("phone", typeof(string));
+            StaffTable.Columns.Add("email", typeof(string));
+            StaffTable.Columns.Add("designation_a", typeof(string));
+            StaffTable.Columns.Add("designation_s", typeof(string));
+            StaffTable.Columns.Add("classname", typeof(string));
+            StaffTable.Columns.Add("subject", typeof(string));
             foreach (Staffs staff in StaffList)
             {
-                StaffType  stafftype= staff.StaffType;
-                int stype = (int)stafftype; 
-                SqlCommand cmd1 = new SqlCommand("Insertstaff", conn);
-                cmd1.Parameters.AddWithValue("@staffid", SqlDbType.Int).Value = staff.Id;
-                cmd1.Parameters.AddWithValue("@typeno", SqlDbType.Int).Value = stype;
-                cmd1.Parameters.AddWithValue("@name", SqlDbType.VarChar).Value = staff.Name;
-                cmd1.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = staff.Phone;
-                cmd1.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = staff.Email;
-                adap = new SqlDataAdapter();
-                adap.InsertCommand = cmd1;
-                cmd1.CommandType = CommandType.StoredProcedure;
-                adap.InsertCommand.ExecuteNonQuery();   
-                adap.Dispose();
-                cmd1.Dispose();
-                switch(stafftype)
+                StaffType stafftype = staff.StaffType;
+                int stype = (int)stafftype;
+                switch (stafftype)
                 {
                     case StaffType.ADMINISTRATIVESTAFF:
-                        cmd1 = new SqlCommand("Insert_Astaff", conn);
-                        cmd1.CommandType = CommandType.StoredProcedure;
-                        cmd1.Parameters.AddWithValue("@staffno", SqlDbType.Int).Value = staffno_a;
-                        cmd1.Parameters.AddWithValue("@designation_a", SqlDbType.VarChar).Value = ((AdministrativeStaff)staff).Designation;
-                        cmd1.Parameters.AddWithValue("@staffid", SqlDbType.Int).Value = staff.Id;
-                        adap = new SqlDataAdapter();
-                        adap.InsertCommand = cmd1;
-                        adap.InsertCommand.ExecuteNonQuery();
-                        adap.Dispose();
-                        cmd1.Dispose();
-                        staffno_a = staffno_a + 1;
+                        StaffTable.Rows.Add(staff.Id, stype, staff.Name, staff.Phone, staff.Email, ((AdministrativeStaff)staff).Designation, null, null, null);
                         break;
                     case StaffType.TEACHINGSTAFF:
-                        cmd1 = new SqlCommand("Insert_Tstaff", conn);
-                        cmd1.CommandType = CommandType.StoredProcedure;
-                        cmd1.Parameters.AddWithValue("@staffno", SqlDbType.Int).Value = staffno_t;
-                        cmd1.Parameters.AddWithValue("@classname", SqlDbType.VarChar).Value = ((TeachingStaffs)staff).ClassName;
-                        cmd1.Parameters.AddWithValue("@subject", SqlDbType.VarChar).Value = ((TeachingStaffs)staff).Subject;
-                        cmd1.Parameters.AddWithValue("@staffid", SqlDbType.Int).Value = staff.Id;
-                        adap = new SqlDataAdapter();
-                        adap.InsertCommand = cmd1;
-                        adap.InsertCommand.ExecuteNonQuery();
-                        adap.Dispose();
-                        cmd1.Dispose();
-                        staffno_t = staffno_t + 1;
+                        StaffTable.Rows.Add(staff.Id, stype, staff.Name, staff.Phone, staff.Email, null, null, ((TeachingStaffs)staff).ClassName, ((TeachingStaffs)staff).Subject);
                         break;
                     case StaffType.SUPPORTSTAFF:
-                        cmd1 = new SqlCommand("Insert_Sstaff", conn);
-                        cmd1.CommandType = CommandType.StoredProcedure;
-                        cmd1.Parameters.AddWithValue("@staffno", SqlDbType.Int).Value = staffno_s;
-                        cmd1.Parameters.AddWithValue("@designation_s", SqlDbType.VarChar).Value = ((SupportStaffs)staff).Designation;
-                        cmd1.Parameters.AddWithValue("@staffid", SqlDbType.Int).Value = staff.Id;
-                        adap = new SqlDataAdapter();
-                        adap.InsertCommand = cmd1;
-                        adap.InsertCommand.ExecuteNonQuery();
-                        adap.Dispose();
-                        cmd1.Dispose();
-                        staffno_s = staffno_s + 1;
+                        StaffTable.Rows.Add(staff.Id, stype, staff.Name, staff.Phone, staff.Email, null, ((SupportStaffs)staff).Designation, null, null);
                         break;
                 }
             }
-            
-
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring")))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ClearTable", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter adap = new SqlDataAdapter();
+                    adap.InsertCommand = cmd;
+                    adap.InsertCommand.ExecuteNonQuery();
+                    cmd.Dispose();
+                    adap.Dispose();
+                    cmd = new SqlCommand("proc_InsertTable", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@stafftable", StaffTable));
+                    adap = new SqlDataAdapter();
+                    adap.InsertCommand = cmd;
+                    adap.InsertCommand.ExecuteNonQuery();
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+           
         }
         private static List<Staffs>ReturnList()
         {
             List<Staffs> StaffList = new List<Staffs>();
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring"));
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("staffdata_getall", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataReader dreader = cmd.ExecuteReader();
-                while (dreader.Read())
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring")))
                 {
-                    StaffList.Add(AddStaff(dreader));
-                }
-                conn.Close();
-                return StaffList;
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("staffdata_getall", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader dreader = cmd.ExecuteReader();
+                    while (dreader.Read())
+                    {
+                        StaffList.Add(AddStaff(dreader));
+                    }
+                    conn.Close();
+                    return StaffList;
+                }  
             }
             catch
             {
