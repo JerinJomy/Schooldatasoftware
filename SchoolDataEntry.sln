@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console", "Console\Console.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{2F5EBF8F-00FD-4C36-8963-7C513C0626C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffDataBase", "StaffDataBase\StaffDataBase.csproj", "{4342D757-75E9-4D77-8D50-68470522E013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffDatabase", "StaffDataBase\StaffDatabase.csproj", "{4342D757-75E9-4D77-8D50-68470522E013}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
