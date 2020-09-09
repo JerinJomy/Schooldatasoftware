@@ -11,43 +11,26 @@ namespace Staffs
     {
         public XmlStaffOperations()
         {
+            ReturnList();
         }
         static Type[] StaffTypes = { typeof(Staffs), typeof(AdministrativeStaff), typeof(SupportStaffs), typeof(TeachingStaffs) };
         static XmlSerializer serializer = new XmlSerializer(typeof(List<Staffs>), StaffTypes);
-        List<Staffs> StaffList = ReturnList();
+        List<Staffs> StaffList {get; set;}
 
-        public void Delete(int id)
+        public void WriteData(List<Staffs>Stafflist)
         {
-            StaffOperations.Delete(id, StaffList);
-        }
-
-        public void WriteData()
-        {
+            StaffList = Stafflist;
             TextWriter xmlwriter = new StreamWriter(ConfigurationManager.AppSettings["Xmlfile"]);
             serializer.Serialize(xmlwriter, StaffList);
             xmlwriter.Close();
         }
 
-        public void EnterData()
+        public List<Staffs> PopulateList()
         {
-            StaffList.Add(StaffOperations.EnterData(StaffList));
+            return StaffList;
         }
 
-        public void Update(int id)
-        {
-            StaffOperations.UpdateData(id, StaffList);
-        }
-
-        public void View()
-        {
-            StaffOperations.View(StaffList);
-        }
-
-        public void ViewOne(int id)
-        {
-            StaffOperations.ViewOne(id, StaffList);
-        }
-        public static List<Staffs> ReturnList()
+        public void ReturnList()
         {
             if (!File.Exists(ConfigurationManager.AppSettings["xmlfile"]))
             {
@@ -59,15 +42,13 @@ namespace Staffs
             FileStream xmlfilestream = new FileStream(ConfigurationManager.AppSettings["Xmlfile"], FileMode.Open);
             try
             {
-                List<Staffs> StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
+                StaffList = (List<Staffs>)serializer.Deserialize(xmlfilestream);
                 xmlfilestream.Close();
-                return StaffList;
             }
             catch
             {
-                List<Staffs> StaffList= new List<Staffs>();
+                StaffList= new List<Staffs>();
                 xmlfilestream.Close();
-                return StaffList;
             }
         }
     }

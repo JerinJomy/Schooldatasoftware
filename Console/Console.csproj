@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj" />
-    <ProjectReference Include="..\StaffDatabase\StaffDatabase.csproj" />
+    <ProjectReference Include="..\StaffDataBase\StaffDatabase.csproj" />
     <Content Include="JsonStaffOperations.cs" />
     <Content Include="Program.cs" />
     <Content Include="StaffOperations.cs" />
@@ -11,9 +11,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <Content Include="XmlStaffOperations.cs" />
-    <Content Include="FileOperations.cs" />
     <Content Include="App.config" />
-    <Content Include="Staffs.XmlStaffOperations,Console" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

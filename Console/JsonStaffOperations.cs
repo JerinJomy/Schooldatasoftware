@@ -8,36 +8,27 @@ namespace Staffs
 {
     public class JsonStaffOperations : IStaffOperations
     {
+        public JsonStaffOperations()
+        {
+            ReturnList();
+        }
+
         static private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-        List<Staffs> StaffList = ReturnList();
-        public void EnterData()
+        private List<Staffs> StaffList {get;set;} 
+   
+        public List<Staffs> PopulateList()
         {
-            StaffList.Add(StaffOperations.EnterData(StaffList));
+            return StaffList;
         }
-        public void View()
+        public void WriteData(List<Staffs>Stafflist)
         {
-            StaffOperations.View(StaffList);
-        }
-        public void Delete(int id)
-        {
-            StaffOperations.Delete(id, StaffList);
-        }
-        public void Update(int id)
-        {
-            StaffOperations.UpdateData(id, StaffList);
-        }
-        public void ViewOne(int id)
-        {
-            StaffOperations.ViewOne(id, StaffList);
-        }
-        public void WriteData()
-        {
+            StaffList = Stafflist;
             string jsonline = JsonConvert.SerializeObject(StaffList.ToArray(), Formatting.Indented, settings);
             File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], string.Empty);
             File.WriteAllText(ConfigurationManager.AppSettings["Jsonfile"], jsonline);
         }
 
-        public static List<Staffs> ReturnList()
+        private void ReturnList()
         {
             if (!File.Exists(ConfigurationManager.AppSettings["Jsonfile"]))
             {
@@ -47,13 +38,11 @@ namespace Staffs
             try
             {
                 string Jsonstring = File.ReadAllText(ConfigurationManager.AppSettings["Jsonfile"]);
-                List<Staffs> StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
-                return StaffList;
+                StaffList = JsonConvert.DeserializeObject<List<Staffs>>(Jsonstring, settings);
             }
             catch
             {
-                List<Staffs> StaffList= new List<Staffs>();
-                return StaffList;
+                 StaffList= new List<Staffs>();
             }
         }
     }

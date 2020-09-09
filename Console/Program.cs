@@ -9,10 +9,10 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
-            string objectselect = ConfigurationManager.AppSettings.Get("databaseobject");
+            string objectselect = ConfigurationManager.AppSettings.Get("JsonStaffOperations");
             var objectType = Type.GetType(objectselect);
             IStaffOperations staff=Activator.CreateInstance(objectType) as IStaffOperations;
-            List<Staffs> StaffList = new List<Staffs>();
+            List<Staffs> StaffList = staff.PopulateList();
             string select;
             do
             {
@@ -21,25 +21,25 @@ namespace Staffs
                 switch (select)
                 {
                     case "1":
-                        staff.EnterData();
+                        StaffList.Add(StaffOperations.EnterData(StaffList));
                         break;
                     case "2":
-                        staff.View();
+                        StaffOperations.View(StaffList);
                         break;
                     case "3":
                         int viewid = StaffOperations.ReturnId();
-                        staff.ViewOne(viewid);
+                        StaffOperations.ViewOne(viewid, StaffList);
                         break;
                     case "4":
                         int deleteid = StaffOperations.ReturnId();
-                        staff.Delete(deleteid);
+                        StaffOperations.Delete(deleteid, StaffList);
                         break;
                     case "5":
                         int updateid = StaffOperations.ReturnId();
-                        staff.Update(updateid);
+                        StaffOperations.UpdateData(updateid,StaffList);
                         break;
                     case "9":
-                        staff.WriteData();
+                        staff.WriteData(StaffList);
                         Console.WriteLine("PROGRAM ENDED");
                         break;
                     default:

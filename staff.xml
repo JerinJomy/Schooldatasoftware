@@ -17,4 +17,12 @@
     <ClassName>q</ClassName>
     <Subject>q</Subject>
   </Staffs>
+  <Staffs xsi:type="SupportStaffs">
+    <Name>d</Name>
+    <StaffType>SUPPORTSTAFF</StaffType>
+    <Phone>d</Phone>
+    <Email>d</Email>
+    <Id>4</Id>
+    <Designation>d</Designation>
+  </Staffs>
 </ArrayOfStaffs>
