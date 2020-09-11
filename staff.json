@@ -1,0 +1,21 @@
+[
+  {
+    "$type": "Staffs.TeachingStaffs, Model",
+    "ClassName": "a",
+    "Subject": "a",
+    "Name": "a",
+    "StaffType": 1,
+    "Phone": "a",
+    "Email": "a",
+    "Id": 1
+  },
+  {
+    "$type": "Staffs.AdministrativeStaff, Model",
+    "Designation": "asd",
+    "Name": "mex",
+    "StaffType": 2,
+    "Phone": "dd",
+    "Email": "dd",
+    "Id": 2
+  }
+]

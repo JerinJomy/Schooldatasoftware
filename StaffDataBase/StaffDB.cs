@@ -9,7 +9,7 @@ namespace Staffs
     {
         public StaffDB()
         {
-            ReturnList();
+            ReturnStaffList();
         }
         private List<Staffs> StaffList { get; set; }
 
@@ -24,7 +24,7 @@ namespace Staffs
         public void WriteData(List<Staffs> Stafflist)
         {
             StaffList = Stafflist;
-            DataTable StaffTable = ReturnTable(StaffList);
+            DataTable StaffTable = ReturnStaffTable(StaffList);
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring")))
@@ -44,7 +44,7 @@ namespace Staffs
             }
            
         }
-        private void ReturnList()
+        private void ReturnStaffList()
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Staffs
                     SqlDataReader dreader = cmd.ExecuteReader();
                     while (dreader.Read())
                     {
-                        templist.Add(AddStaff(dreader));
+                        templist.Add(GetStaff(dreader));
                     }
                     conn.Close();
                     StaffList = templist;
@@ -69,7 +69,7 @@ namespace Staffs
                 StaffList = new List<Staffs>();
             }
         }
-        private static Staffs AddStaff(SqlDataReader dreader)
+        private static Staffs GetStaff(SqlDataReader dreader)
         {
             int id = Convert.ToInt32(dreader["staffid"]);
             int stype = Convert.ToInt32(dreader["typeno"]);
@@ -101,7 +101,7 @@ namespace Staffs
                 return null;
             }
         }
-        private static DataTable ReturnTable(List<Staffs> StaffList)
+        private static DataTable ReturnStaffTable(List<Staffs> StaffList)
         {
             DataTable StaffTable = new DataTable();
             StaffTable.Columns.Add("staffid", typeof(int));
