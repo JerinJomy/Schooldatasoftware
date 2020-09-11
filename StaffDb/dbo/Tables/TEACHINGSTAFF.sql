@@ -1,9 +1,7 @@
-﻿CREATE TABLE [dbo].[TEACHINGSTAFF] (
-    [STAFFNO]   INT          IDENTITY (1, 1) NOT NULL,
-    [CLASSNAME] VARCHAR (50) NOT NULL,
-    [SUBJECT]   VARCHAR (50) NOT NULL,
-    [STAFFID]   INT          NOT NULL,
-    PRIMARY KEY CLUSTERED ([STAFFNO] ASC),
-    FOREIGN KEY ([STAFFID]) REFERENCES [dbo].[STAFFS] ([STAFFID])
+﻿CREATE TABLE [dbo].[TeachingStaff] (
+    [classname] VARCHAR (50) NOT NULL,
+    [subject]   VARCHAR (50) NOT NULL,
+    [Staffid]   INT          NOT NULL,
+    FOREIGN KEY ([Staffid]) REFERENCES [dbo].[Staffs] ([StaffId])
 );
 

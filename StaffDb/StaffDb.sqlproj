@@ -6,14 +6,14 @@
     <Name>StaffDb</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{bd0c9f89-9ae7-4214-87f9-42b5d0de10a9}</ProjectGuid>
+    <ProjectGuid>{cfd71e82-b089-4e91-8358-1ef0014bfcca}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
     <RootNamespace>StaffDb</RootNamespace>
     <AssemblyName>StaffDb</AssemblyName>
-    <ModelCollation>1033,CI</ModelCollation>
+    <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -22,8 +22,6 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
-    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -58,20 +56,5 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="dbo\" />
-    <Folder Include="dbo\Tables\" />
-    <Folder Include="dbo\Stored Procedures\" />
-    <Folder Include="dbo\User Defined Types\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="dbo\Tables\STAFFS.sql" />
-    <Build Include="dbo\Tables\STAFFTYPE.sql" />
-    <Build Include="dbo\Tables\SUPPORTSTAFF.sql" />
-    <Build Include="dbo\Tables\ADMINISTRATIVESTAFF.sql" />
-    <Build Include="dbo\Tables\TEACHINGSTAFF.sql" />
-    <Build Include="dbo\Stored Procedures\proc_staffdata_getall.sql" />
-    <Build Include="dbo\Stored Procedures\ClearTable.sql" />
-    <Build Include="dbo\Stored Procedures\proc_InsertStaffs.sql" />
-    <Build Include="dbo\User Defined Types\stafftable.sql" />
   </ItemGroup>
 </Project>

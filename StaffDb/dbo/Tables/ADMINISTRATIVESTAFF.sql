@@ -1,8 +1,6 @@
-﻿CREATE TABLE [dbo].[ADMINISTRATIVESTAFF] (
-    [STAFFNO]     INT          IDENTITY (1, 1) NOT NULL,
-    [DESIGNATION] VARCHAR (50) NOT NULL,
-    [STAFFID]     INT          NOT NULL,
-    PRIMARY KEY CLUSTERED ([STAFFNO] ASC),
-    FOREIGN KEY ([STAFFID]) REFERENCES [dbo].[STAFFS] ([STAFFID])
+﻿CREATE TABLE [dbo].[AdministrativeStaff] (
+    [Designation] VARCHAR (50) NOT NULL,
+    [Staffid]     INT          NOT NULL,
+    FOREIGN KEY ([Staffid]) REFERENCES [dbo].[Staffs] ([StaffId])
 );
 
