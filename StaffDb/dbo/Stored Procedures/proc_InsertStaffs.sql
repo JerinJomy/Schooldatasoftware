@@ -7,7 +7,7 @@ BEGIN
 USING 
    @stafftable AS source
 ON 
-   target.staffid= source.staffid
+   target.email= source.email
  
 WHEN MATCHED THEN 
              UPDATE SET  
@@ -24,7 +24,7 @@ WHEN NOT MATCHED THEN
  MERGE 
    ADMINISTRATIVESTAFF AS target
 USING 
-  (select designation_a,staffid from @stafftable  where typeno=2) as source
+  (select s.designation_a,t.staffid from @stafftable s inner join staffs t on s.email=t.email where s.typeno=2) as source
 ON 
    target.staffid= source.staffid 
  
@@ -40,13 +40,13 @@ WHEN NOT MATCHED THEN
  MERGE 
    SUPPORTSTAFF AS target
 USING 
-   (select designation_s,staffid from @stafftable  where typeno=3) as source
+   (select s.designation_s,t.staffid from @stafftable s inner join staffs t on s.email=t.email where s.typeno=3) as source
 ON 
    target.staffid= source.staffid 
  
 WHEN MATCHED  THEN 
              UPDATE SET  
-                     target.designation= source.designation_S
+                     target.designation= source.designation_s
 
 WHEN NOT MATCHED THEN 
  
@@ -56,7 +56,7 @@ WHEN NOT MATCHED THEN
  MERGE 
    TEACHINGSTAFF AS target
 USING 
-   (select classname,subject,staffid from @stafftable  where typeno=1) as source
+   (select s.classname,t.staffid,s.subject from @stafftable s inner join staffs t on s.email=t.email where s.typeno=1) as source
    ON 
    target.staffid= source.staffid 
  
@@ -99,7 +99,7 @@ MERGE
 USING 
    @stafftable AS source
 ON 
-   target.staffid= source.staffid
+   target.email= source.email
 WHEN NOT MATCHED by source THEN delete;
 
 END
