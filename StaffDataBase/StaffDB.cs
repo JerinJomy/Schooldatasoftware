@@ -17,7 +17,7 @@ namespace Staffs
 
         public List<Staffs> PopulateList()
         {
-            return StaffList; 
+            return StaffList;
         }
 
 
@@ -38,11 +38,11 @@ namespace Staffs
                     adap.InsertCommand.ExecuteNonQuery();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-           
+
         }
         private void ReturnStaffList()
         {
@@ -61,7 +61,7 @@ namespace Staffs
                     }
                     conn.Close();
                     StaffList = templist;
-                }  
+                }
             }
             catch
             {

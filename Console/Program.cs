@@ -9,8 +9,10 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
+            
             string objectselect = ConfigurationManager.AppSettings.Get("StaffDB");
             var objectType = Type.GetType(objectselect);
+            Console.WriteLine(objectselect);
             IStaffOperations staff=Activator.CreateInstance(objectType) as IStaffOperations;
             List<Staffs> StaffList = staff.PopulateList();
             string select;
