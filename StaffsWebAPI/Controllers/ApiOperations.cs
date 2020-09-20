@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Staffs;
 
 namespace StaffsWebAPI.Controllers
 {
-    public static class StaffOperations
+    public static class ApiOperations
     {
         public static Staffs.Staffs GetStaffs(int id,List<Staffs.Staffs> StaffList)
         {
@@ -47,6 +46,31 @@ namespace StaffsWebAPI.Controllers
                 default:
                     return null;
             }
+        }
+       public static List<Staffs.Staffs> InsertStaff(object json, List<Staffs.Staffs> StaffList)
+        {
+            dynamic dynamicstaff = JsonConvert.DeserializeObject(json.ToString());
+            Staffs.Staffs staff;
+            int typeno = (int)dynamicstaff.staffType;
+            switch (typeno)
+            {
+                case 1:
+                    staff = JsonConvert.DeserializeObject<TeachingStaffs>(json.ToString());
+                    staff.Id = StaffDB.GetId();
+                    StaffList.Add(staff);
+                    break;
+                case 2:
+                    staff = JsonConvert.DeserializeObject<AdministrativeStaff>(json.ToString());
+                    staff.Id = StaffDB.GetId();
+                    StaffList.Add(staff);
+                    break;
+                case 3:
+                    staff = JsonConvert.DeserializeObject<SupportStaffs>(json.ToString());
+                    staff.Id = StaffDB.GetId();
+                    StaffList.Add(staff);
+                    break;
+            }
+            return StaffList;
         }
     }
 }

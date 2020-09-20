@@ -5,6 +5,7 @@
     [Phone]   VARCHAR (50) NOT NULL,
     [Email]   VARCHAR (50) NOT NULL,
     PRIMARY KEY CLUSTERED ([StaffId] ASC),
-    FOREIGN KEY ([TypeNo]) REFERENCES [dbo].[STAFFTYPE] ([TYPENO])
+    UNIQUE NONCLUSTERED ([Email] ASC),
+    UNIQUE NONCLUSTERED ([Phone] ASC)
 );
 

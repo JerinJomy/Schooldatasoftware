@@ -11,7 +11,7 @@ namespace Staffs
         {
             ReturnStaffList();
         }
-        private List<Staffs> StaffList { get; set; }
+        public List<Staffs> StaffList { get; set; }
 
 
 
@@ -65,7 +65,6 @@ namespace Staffs
             }
             catch
             {
-                Console.WriteLine("hello");
                 StaffList = new List<Staffs>();
             }
         }
@@ -131,6 +130,19 @@ namespace Staffs
                 }
             }
             return StaffTable;
+        }
+        public static int GetId()
+        {
+           using(SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring")))
+            {
+                conn.Open();
+                string sql = "SELECT Cast(IDENT_CURRENT('staffs') As Int)";
+                SqlCommand cmd= new SqlCommand(sql, conn);
+                SqlDataReader dreader = cmd.ExecuteReader();
+                dreader.Read();
+                int id = (int)dreader.GetValue(0)+1;
+                return id;
+            }
         }
     }
 }
