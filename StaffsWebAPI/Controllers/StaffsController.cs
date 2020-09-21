@@ -24,7 +24,7 @@ namespace StaffsWebAPI.Controllers
         {
             StaffDB staffdb = new StaffDB();
             List<Staffs.Staffs> StaffList = staffdb.StaffList;
-            Staffs.Staffs staff = ApiOperations.GetStaffs(id, StaffList);
+            Staffs.Staffs staff = StaffApiHelper.GetStaffs(id, StaffList);
             if (staff == null)
             {
                 return NotFound();
@@ -39,23 +39,31 @@ namespace StaffsWebAPI.Controllers
         {
             StaffDB staffdb = new StaffDB();
             List<Staffs.Staffs> StaffList = staffdb.StaffList;
-            List<Staffs.Staffs> StaffTypeList = ApiOperations.ReturnStaffTypeList(type, StaffList);
-            if (StaffTypeList == null)
+            List<Staffs.Staffs> StaffTypeList = new List<Staffs.Staffs>();
+            switch (type)
             {
-                return NotFound();
+                case "teaching":
+                    StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.TEACHINGSTAFF);
+                    List<TeachingStaffs> TeachingStaffsList = StaffTypeList.Cast<TeachingStaffs>().ToList();
+                    return Ok(TeachingStaffsList);
+                case "administrative":
+                    StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.ADMINISTRATIVESTAFF);
+                    List<AdministrativeStaff> AdministrativeStaffsList = StaffTypeList.Cast<AdministrativeStaff>().ToList();
+                    return Ok(AdministrativeStaffsList);
+                case "support":
+                    StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.SUPPORTSTAFF);
+                    List<SupportStaffs> SupportStaffsList = StaffTypeList.Cast<SupportStaffs>().ToList();
+                    return Ok(SupportStaffsList);
+                default:
+                    return NotFound();
             }
-            else
-            {
-                return Ok(StaffTypeList);
-            }
-
         }
         [HttpPost]
         public IActionResult Post([FromBody] object json)
         {
             StaffDB staffdb = new StaffDB();
             List<Staffs.Staffs> StaffList = staffdb.StaffList;
-            StaffList = ApiOperations.InsertStaff(json, StaffList);
+            StaffList = StaffApiHelper.InsertStaff(json, StaffList);
             staffdb.WriteData(StaffList);
             return Ok(StaffList[StaffList.Count - 1]);
         }
@@ -66,10 +74,15 @@ namespace StaffsWebAPI.Controllers
         {
             StaffDB staffdb = new StaffDB();
             List<Staffs.Staffs> StaffList = staffdb.StaffList;
+            Staffs.Staffs staff = JsonConvert.DeserializeObject<Staffs.Staffs>(json.ToString());
+            if(staff.Id!=id)
+            {
+                return BadRequest();
+            }
             int index = StaffList.FindIndex(s => (s.Id == id));
             if(index==-1)
             {
-                return NoContent();
+                return NotFound();
             }
             else
             {
@@ -77,7 +90,7 @@ namespace StaffsWebAPI.Controllers
                 switch (StaffList[index].StaffType)
                 {
                     case StaffType.TEACHINGSTAFF:
-                        TeachingStaffs staff=JsonConvert.DeserializeObject<TeachingStaffs>(json.ToString());
+                        TeachingStaffs staff_t=JsonConvert.DeserializeObject<TeachingStaffs>(json.ToString());
                         ((TeachingStaffs)StaffList[index]).UpdateTeaching(staff.Name, staff.Phone, staff.Email, staff.ClassName, staff.Subject);
                         break;
                     case StaffType.ADMINISTRATIVESTAFF:
@@ -103,7 +116,7 @@ namespace StaffsWebAPI.Controllers
             int index = StaffList.FindIndex(s => (s.Id == id));
             if (index == -1)
             {
-                return NoContent();
+                return NotFound();
             }
             else
             {

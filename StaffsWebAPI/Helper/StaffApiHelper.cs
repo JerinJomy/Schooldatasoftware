@@ -5,7 +5,7 @@ using Staffs;
 
 namespace StaffsWebAPI.Controllers
 {
-    public static class ApiOperations
+    public static class StaffApiHelper
     {
         public static Staffs.Staffs GetStaffs(int id,List<Staffs.Staffs> StaffList)
         {
@@ -29,24 +29,25 @@ namespace StaffsWebAPI.Controllers
                 }
             }
         }
-        public static List<Staffs.Staffs> ReturnStaffTypeList(string type,List<Staffs.Staffs> StaffList)
-        {
-            List<Staffs.Staffs> StaffTypeList = new List<Staffs.Staffs>();
-            switch (type)
-            {
-                case "teaching":
-                    StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.TEACHINGSTAFF);
-                    return StaffTypeList;
-                case "administrative":
-                    StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.ADMINISTRATIVESTAFF);
-                    return StaffTypeList;
-                case "support":
-                    StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.SUPPORTSTAFF);
-                    return StaffTypeList;
-                default:
-                    return null;
-            }
-        }
+        //public static List<Staffs.Staffs> ReturnStaffTypeList(string type,List<Staffs.Staffs> StaffList)
+        //{
+        //    List<Staffs.Staffs> StaffTypeList = new List<Staffs.Staffs>();
+        //    switch (type)
+        //    {
+        //        case "teaching":
+        //            StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.TEACHINGSTAFF);
+        //            List<TeachingStaffs> TeachingStaffsList = StaffTypeList.Cast<TeachingStaffs>().ToList();
+        //            return TeachingStaffsList;
+        //        case "administrative":
+        //            StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.ADMINISTRATIVESTAFF);
+        //            return StaffTypeList;
+        //        case "support":
+        //            StaffTypeList = StaffList.FindAll(x => x.StaffType == StaffType.SUPPORTSTAFF);
+        //            return StaffTypeList;
+        //        default:
+        //            return null;
+        //    }
+        //}
        public static List<Staffs.Staffs> InsertStaff(object json, List<Staffs.Staffs> StaffList)
         {
             dynamic dynamicstaff = JsonConvert.DeserializeObject(json.ToString());
