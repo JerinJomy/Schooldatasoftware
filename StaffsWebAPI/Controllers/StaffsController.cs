@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,12 +17,17 @@ namespace StaffsWebAPI.Controllers
     [Route("api/[controller]")]
     public class StaffsController : ControllerBase
     {
+        public StaffsController()
+        {
+            StaffList = staffdb.StaffList;
+        }
+        public StaffDB staffdb = new StaffDB();
+        public List<Staffs.Staffs> StaffList { get; set; }
+
         [HttpGet]
         [Route("{id:int}")]
         public IActionResult Get(int id)
         {
-            StaffDB staffdb = new StaffDB();
-            List<Staffs.Staffs> StaffList = staffdb.StaffList;
             Staffs.Staffs staff = StaffApiHelper.GetStaffs(id, StaffList);
             if (staff == null)
             {
@@ -37,8 +41,6 @@ namespace StaffsWebAPI.Controllers
         [HttpGet]
         public IActionResult Get(String type)
         {
-            StaffDB staffdb = new StaffDB();
-            List<Staffs.Staffs> StaffList = staffdb.StaffList;
             List<Staffs.Staffs> StaffTypeList = new List<Staffs.Staffs>();
             switch (type)
             {
@@ -61,9 +63,7 @@ namespace StaffsWebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] object json)
         {
-            StaffDB staffdb = new StaffDB();
-            List<Staffs.Staffs> StaffList = staffdb.StaffList;
-            StaffList = StaffApiHelper.InsertStaff(json, StaffList);
+            StaffList.Add(StaffApiHelper.InsertStaff(json, StaffList));
             staffdb.WriteData(StaffList);
             return Ok(StaffList[StaffList.Count - 1]);
         }
@@ -72,14 +72,13 @@ namespace StaffsWebAPI.Controllers
         [Route("{id:int}")]            
         public IActionResult Put(int id,[FromBody] object json)
         {
-            StaffDB staffdb = new StaffDB();
-            List<Staffs.Staffs> StaffList = staffdb.StaffList;
             Staffs.Staffs staff = JsonConvert.DeserializeObject<Staffs.Staffs>(json.ToString());
             if(staff.Id!=id)
             {
                 return BadRequest();
             }
             int index = StaffList.FindIndex(s => (s.Id == id));
+            //StaffList.Exists
             if(index==-1)
             {
                 return NotFound();
@@ -91,7 +90,7 @@ namespace StaffsWebAPI.Controllers
                 {
                     case StaffType.TEACHINGSTAFF:
                         TeachingStaffs staff_t=JsonConvert.DeserializeObject<TeachingStaffs>(json.ToString());
-                        ((TeachingStaffs)StaffList[index]).UpdateTeaching(staff.Name, staff.Phone, staff.Email, staff.ClassName, staff.Subject);
+                        ((TeachingStaffs)StaffList[index]).UpdateTeaching(staff_t.Name, staff_t.Phone, staff_t.Email, staff_t.ClassName, staff_t.Subject);
                         break;
                     case StaffType.ADMINISTRATIVESTAFF:
                         AdministrativeStaff staff_a = JsonConvert.DeserializeObject<AdministrativeStaff>(json.ToString());

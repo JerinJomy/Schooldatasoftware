@@ -48,30 +48,28 @@ namespace StaffsWebAPI.Controllers
         //            return null;
         //    }
         //}
-       public static List<Staffs.Staffs> InsertStaff(object json, List<Staffs.Staffs> StaffList)
+       public static Staffs.Staffs InsertStaff(object json, List<Staffs.Staffs> StaffList)
         {
             dynamic dynamicstaff = JsonConvert.DeserializeObject(json.ToString());
-            Staffs.Staffs staff;
+            Staffs.Staffs staff=new Staffs.Staffs();
             int typeno = (int)dynamicstaff.staffType;
             switch (typeno)
             {
                 case 1:
                     staff = JsonConvert.DeserializeObject<TeachingStaffs>(json.ToString());
                     staff.Id = StaffDB.GetId();
-                    StaffList.Add(staff);
-                    break;
+                    return staff;
                 case 2:
                     staff = JsonConvert.DeserializeObject<AdministrativeStaff>(json.ToString());
                     staff.Id = StaffDB.GetId();
-                    StaffList.Add(staff);
-                    break;
+                    return staff;
                 case 3:
                     staff = JsonConvert.DeserializeObject<SupportStaffs>(json.ToString());
                     staff.Id = StaffDB.GetId();
-                    StaffList.Add(staff);
-                    break;
+                    return staff;
+                default:
+                    return staff;
             }
-            return StaffList;
         }
     }
 }
