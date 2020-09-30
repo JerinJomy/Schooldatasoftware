@@ -110,8 +110,7 @@ namespace StaffsWebAPI.Controllers
         [Route("{id:int}")]
         public IActionResult Delete(int id)
         {
-            StaffDB staffdb = new StaffDB();
-            List<Staffs.Staffs> StaffList = staffdb.StaffList;
+            StaffList = staffdb.StaffList;
             int index = StaffList.FindIndex(s => (s.Id == id));
             if (index == -1)
             {

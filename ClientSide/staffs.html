@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="staff.css" >
+
+<script src="staff.js">
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+</style>
+</head>
+<body  style="background-color: silver">
+
+<h2 style="text-align: center; background-color: #6B5B95"><br>StaffDetails</h2>
+<br>
+<!-- <p>Click on the button to open the dropdown menu.</p> -->
+
+<!-- <div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">StaffTypes</button>
+  <div id="myDropdown" class="dropdown-content">
+    <p onclick="fetchtadmindata()">Administrative Staffs</p>
+    <p onclick="fetchteachingdata()">Teaching Staffs</p>
+    <p onclick="fetchtsupportdata()">Support Staffs</p>
+  </div> -->
+  <div class="dropdown">
+  <select onchange="GetStaff(value)">
+  <option >Select Staff</option>
+  <option value="administrative">Administrative Staff</option>
+  <option value="teaching">Teaching Staff</option>
+  <option value="support">Support Staff</option>
+</select>
+</div>
+<br>
+<h2 id="title" style="text-align: center;">Administrative Staff</h2>
+ <table class="table table-striped">
+  <tr class="bg-info">
+    
+     </tr>
+    <tbody id="table">
+    </tbody>
+  </table>
+  <button onclick="AddStaff()">Add Staff</button>
+</body>
+</html>

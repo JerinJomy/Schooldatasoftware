@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>StaffDb</Name>
+    <Name>StaffDB</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{cfd71e82-b089-4e91-8358-1ef0014bfcca}</ProjectGuid>
+    <ProjectGuid>{9ed9b9ee-ec4f-4224-bd22-20ab7f5ee0d9}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>StaffDb</RootNamespace>
-    <AssemblyName>StaffDb</AssemblyName>
+    <RootNamespace>StaffDB</RootNamespace>
+    <AssemblyName>StaffDB</AssemblyName>
     <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -64,13 +64,13 @@
     <Folder Include="dbo\User Defined Types\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\STAFFTYPE_1.sql" />
+    <Build Include="dbo\Tables\STAFFTYPE.sql" />
     <Build Include="dbo\Tables\Staffs.sql" />
     <Build Include="dbo\Tables\AdministrativeStaff.sql" />
     <Build Include="dbo\Tables\SupportStaff.sql" />
     <Build Include="dbo\Tables\TeachingStaff.sql" />
-    <Build Include="dbo\Stored Procedures\proc_staffdata_getall_2.sql" />
+    <Build Include="dbo\Stored Procedures\proc_staffdata_getall.sql" />
     <Build Include="dbo\Stored Procedures\proc_InsertStaffs.sql" />
-    <Build Include="dbo\User Defined Types\stafftable_1.sql" />
+    <Build Include="dbo\User Defined Types\stafftable.sql" />
   </ItemGroup>
 </Project>
