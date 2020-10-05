@@ -41,3 +41,4 @@ postion:absolute
 .dropdown p:hover {background-color: #ddd;}
 
 .show {display: block;}
+.hover:hover{ background-color: tomato;}
