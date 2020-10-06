@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="staff.css" >
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-
-</style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="staff.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="staff.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body  style="background-color: silver">
-<script src="staff.js">
-</script>
-<h2 style="text-align: center; background-color: #6B5B95" id="set"><br>StaffDetails</h2>
-<br>
-<!-- <p>Click on the button to open the dropdown menu.</p> -->
 
-<!-- <div class="dropdown">
+<body style="background-color: silver">
+  <h2 style="text-align: center; background-color: #6B5B95" id="set"><br>StaffDetails</h2>
+  <br>
+  <!-- <p>Click on the button to open the dropdown menu.</p> -->
+
+  <!-- <div class="dropdown">
   <button onclick="myFunction()" class="dropbtn">StaffTypes</button>
   <div id="myDropdown" class="dropdown-content">
     <p onclick="fetchtadmindata()">Administrative Staffs</p>
@@ -25,22 +23,23 @@
     <p onclick="fetchtsupportdata()">Support Staffs</p>
   </div> -->
   <div class="dropdown">
-  <select onchange="GetStaff(value)">
-  <option >Select Staff</option>
-  <option value="administrative">Administrative Staff</option>
-  <option value="teaching">Teaching Staff</option>
-  <option value="support">Support Staff</option>
-</select>
-</div>
-<br>
-<h2 id="title" style="text-align: center;">Administrative Staff</h2>
- <table class="table table-striped" id="table" onmouseover="EditStaff()">
-  <tr class="bg-info">
-    
-     </tr>
+    <select onchange="GetStaff(value)">
+      <option>Select Staff</option>
+      <option value="administrative">Administrative Staff</option>
+      <option value="teaching">Teaching Staff</option>
+      <option value="support">Support Staff</option>
+    </select>
+  </div>
+  <br>
+  <h2 id="title" style="text-align: center;">Administrative Staff</h2>
+  <table class="table table-striped" id="table">
+    <tr class="bg-info">
+
+    </tr>
     <tbody>
     </tbody>
   </table>
-  <div onload="test()"></div>
+  <div></div>
 </body>
+
 </html>

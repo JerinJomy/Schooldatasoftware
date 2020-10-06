@@ -27,7 +27,7 @@ namespace StaffsWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors(Options => Options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:44386").AllowAnyHeader().AllowAnyOrigin()));
+            services.AddCors(Options => Options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:44386").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
