@@ -1,35 +1,33 @@
 var Params = new URLSearchParams(document.location.search.substring(1));
 var id = Params.get('id');
 var type = Params.get('type');
-function AddorEdit() {
+function SelectForm() {
 	if (id != 0) {
-		staff();
+		GetStaffById();
 	}
 }
-function PutorPost() {
+function SelectRequest() {
 	if (id == 0) {
 		var request = "https://localhost:44386/api/Staffs/"
 		AddandEdit('POST', request);
 	}
 	else {
 		var request = "https://localhost:44386/api/Staffs/" + id
-		var select=confirm("Press ok to edit");
-		if(select)
-		{
+		var select = confirm("Press ok to edit");
+		if (select) {
 			AddandEdit('PUT', request)
 		}
-		else{
-			window.open("../staffs.html", "_self")	
+		else {
+			window.open("../staffs.html", "_self")
 		}
 	}
 }
-function staff() {
+function GetStaffById() {
 	var request = 'https://localhost:44386/api/Staffs/' + id
-	fetch(request).then((res) => res.json()).then((data) => GetData(data))
+	fetch(request).then((res) => res.json()).then((data) => PopulateForm(data))
 }
 
-// {"designation":"Ofiice","name":"jerin","staffType":2,"phone":"940073","email":"jerin@123","id":1}
-function GetData(data) {
+function PopulateForm(data) {
 	var name = data.name
 	var email = data.email
 	var phone = data.phone
@@ -106,4 +104,3 @@ function AddandEdit(method, request) {
 			}
 		})
 }
-AddorEdit();

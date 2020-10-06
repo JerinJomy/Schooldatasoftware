@@ -18,11 +18,10 @@ function GetStaff(type) {
       break;
   }
 }
-var type = "administrative"
 
 function Buildteachingtable(data) {
-  document.getElementById("title").innerHTML = "Teaching Staff";
-  var table = document.getElementById('table')
+  document.getElementById("StaffType").innerHTML = "Teaching Staff";
+  var table = document.getElementById('stafftable')
   table.innerHTML = `<th>Staff Id</th>
     <th >Name</th>
     <th>Phone</th>
@@ -31,25 +30,25 @@ function Buildteachingtable(data) {
     <th>Subject</th>
     `;
   for (var i = 0; i < data.length; i++) {
-    var row = `<tr class="hover">
+    var row = `<tr>
             <th class="teaching" >${data[i].id}</th>
             <th >${data[i].name}</th>
             <th>${data[i].phone}</th>
            <th>${data[i].email}</th>
            <th>${data[i].className}</th>
            <th>${data[i].subject}</th>
-           <td><button onclick="Edit(this)">edit</button></td>
-           <td><button onclick="Delete(this)">Delete</button></td>
+           <td><button data-id="${data[i].id}" onclick="Edit(this)" data-type="teaching">edit</button></td>
+           <td><button onclick="Delete(this)" data-id="${data[i].id}">Delete</button></td>
            </tr>`
 
     table.innerHTML = table.innerHTML + row
   }
-  table.innerHTML = table.innerHTML + `<br><br><button onclick="AddTeachingStaff()">Add Staff</button>`
+  table.innerHTML = table.innerHTML + `<br><br><button onclick="LoadTeachingStaffForm()">Add Staff</button>`
 }
 
 function Buildsupporttable(data) {
-  document.getElementById("title").innerHTML = "Support Staff";
-  var table = document.getElementById('table')
+  document.getElementById("StaffType").innerHTML = "Support Staff";
+  var table = document.getElementById('stafftable')
   table.innerHTML = `<th>Staff Id</th>
     <th >Name</th>
     <th>Phone</th>
@@ -62,17 +61,17 @@ function Buildsupporttable(data) {
             <th>${data[i].phone}</th>
            <th>${data[i].email}</th>
            <th>${data[i].designation}</th>
-           <td><button onclick="Edit(this)">edit</button></td>
-           <td><button onclick="Delete(this)">Delete</button></td>
+           <td><button onclick="Edit(this)" data-id="${data[i].id}" data-type="support">edit</button></td>
+           <td><button onclick="Delete(this)" data-id="${data[i].id}">Delete</button></td>
            </tr>`
     table.innerHTML = table.innerHTML + row
   }
-  table.innerHTML = table.innerHTML + `<br><br><button onclick="AddSupportStaff()">Add Staff</button>`
+  table.innerHTML = table.innerHTML + `<br><br><button onclick="LoadSupportStaffForm()">Add Staff</button>`
 }
 
 function BuildAdmintable(data) {
-  document.getElementById("title").innerHTML = "Administrative Staff";
-  var table = document.getElementById('table')
+  document.getElementById("StaffType").innerHTML = "Administrative Staff";
+  var table = document.getElementById('stafftable')
   table.innerHTML = `<th >Staff Id</th>
     <th >Name</th>
     <th>Phone</th>
@@ -86,13 +85,13 @@ function BuildAdmintable(data) {
             <th>${data[i].phone}</th>
            <th>${data[i].email}</th>
            <th>${data[i].designation}</th>
-           <td><button onclick="Edit(this)">edit</button></td>
-           <td><button onclick="Delete(this)">Delete</button></td>
+           <td><button onclick="Edit(this)" data-id="${data[i].id}" data-type="admin">edit</button></td>
+           <td><button onclick="Delete(this)" data-id="${data[i].id}" >Delete</button></td>
            </tr>`
 
     table.innerHTML = table.innerHTML + row
   }
-  table.innerHTML = table.innerHTML + `<br><br><button onclick="AddAdminStaff()">Add Staff</button>`
+  table.innerHTML = table.innerHTML + `<br><br><button onclick="LoadAdminStaffForm()">Add Staff</button>`
 }
 
 
@@ -100,37 +99,23 @@ function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-function AddAdminStaff() {
+function LoadAdminStaffForm() {
   var next = "EditandAdd/Admin.html?id=" + 0 + "&type=admin";
   window.open(next, "_self")
 }
 
-function AddTeachingStaff() {
+function LoadTeachingStaffForm() {
   var next = "EditandAdd/Teaching.html?id=" + 0 + "&type=teaching"
   window.open(next, "_self")
 }
-function AddSupportStaff() {
+function LoadSupportStaffForm() {
   var next = "EditandAdd/Support.html?id=" + 0 + "&type=support";
   window.open(next, "_self")
 }
 
-function getval(row) {
-  var id = row.cells[0].innerHTML
-  var type = row.cells[0].className
+function Edit(button) {
+  var id = button.getAttribute("data-id")
+  var type = button.getAttribute("data-type")
   switch (type) {
     case "admin":
       var next = "EditandAdd/Admin.html?id=" + id + "&type=" + type
@@ -146,27 +131,17 @@ function getval(row) {
       break;
   }
 }
-GetStaff(type)
-function Edit(button) {
-  var column = button.parentElement
-  var row = column.parentElement
-  getval(row)
-}
 
-function Delete(button)
- {
-  var column = button.parentElement
-  var row = column.parentElement
-  var id = row.cells[0].innerHTML
-  var select=confirm("Press ok to delete");
-  if(select)
-  {
+function Delete(button) {
+  var id = button.getAttribute("data-id")
+  var select = confirm("Press ok to delete");
+  if (select) {
     request = "https://localhost:44386/api/Staffs/" + id
     fetch(request, {
       method: 'DELETE'
     }).then(response => {
       if (response.ok) {
-        window.open("../staffs.html", "_self")
+        location.reload();
       }
     })
   }

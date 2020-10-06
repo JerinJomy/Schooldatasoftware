@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="EditandAdd.js"> 
-        </script>
-      </head>
-      
-<body>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="EditandAdd.js">
+    </script>
+</head>
+
+<body onload="SelectForm()">
     <h2 style="text-align: center;">Teaching Staff</h2>
     <h2 style="text-align: center;" id="teachingid">Staff ID:</h2>
     <form id="addstaff" style="text-align: center;">
@@ -20,10 +21,8 @@
         <input type="text" id="classname" name="lname"><br><br>
         <label for="lname">Subject:</label><br>
         <input type="text" id="subject" name="lname"><br><br>
-        <input type="button" name="" value="Submit form" onclick="PutorPost()">
+        <input type="button" name="" value="Submit form" onclick="SelectRequest()">
     </form>
-    <script src="EditandAdd.js">
-    </script>
 </body>
 
 </html>

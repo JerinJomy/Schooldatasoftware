@@ -10,18 +10,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body style="background-color: silver">
+<body style="background-color: silver" onload="GetStaff('administrative')">
   <h2 style="text-align: center; background-color: #6B5B95" id="set"><br>StaffDetails</h2>
   <br>
-  <!-- <p>Click on the button to open the dropdown menu.</p> -->
-
-  <!-- <div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">StaffTypes</button>
-  <div id="myDropdown" class="dropdown-content">
-    <p onclick="fetchtadmindata()">Administrative Staffs</p>
-    <p onclick="fetchteachingdata()">Teaching Staffs</p>
-    <p onclick="fetchtsupportdata()">Support Staffs</p>
-  </div> -->
   <div class="dropdown">
     <select onchange="GetStaff(value)">
       <option>Select Staff</option>
@@ -31,8 +22,8 @@
     </select>
   </div>
   <br>
-  <h2 id="title" style="text-align: center;">Administrative Staff</h2>
-  <table class="table table-striped" id="table">
+  <h2 id="StaffType" style="text-align: center;">Administrative Staff</h2>
+  <table class="table table-striped" id="stafftable">
     <tr class="bg-info">
 
     </tr>

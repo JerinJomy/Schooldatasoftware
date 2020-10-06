@@ -3,11 +3,11 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="EditandAdd.js"> 
+  <script src="EditandAdd.js">
   </script>
 </head>
 
-<body>
+<body onload="SelectForm()">
 
   <h2 style="text-align: center;"> Administartive Staff</h2><br>
   <h2 style="text-align: center;" id="adminid">Staff ID:</h2>
@@ -20,7 +20,7 @@
     <input type="text" id="adminemail" value=""><br><br>
     <label>Designation</label><br>
     <input type="text" id="admindesignation" value=""><br><br>
-    <input type="button" name="" value="Submit form" onclick="PutorPost()">
+    <input type="button" name="" value="Submit form" onclick="SelectRequest()">
 
   </form>
 </body>
