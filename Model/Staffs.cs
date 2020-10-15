@@ -22,9 +22,9 @@ namespace Staffs
 
         }
         public Staffs()
-            {
+        {
 
-            }
+        }
         public void Update(string name, string phone, string email)
         {
 
@@ -37,4 +37,3 @@ namespace Staffs
 
 
 }
-

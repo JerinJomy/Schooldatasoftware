@@ -10,7 +10,7 @@ namespace Staffs
         }
         public AdministrativeStaff()
         {
-            
+
         }
         public void UpdateAdministrative(string name, string phone, string email, string designation)
         {

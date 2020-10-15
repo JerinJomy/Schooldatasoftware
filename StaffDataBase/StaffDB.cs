@@ -133,14 +133,14 @@ namespace Staffs
         }
         public static int GetId()
         {
-           using(SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring")))
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("connectionstring")))
             {
                 conn.Open();
                 string sql = "SELECT Cast(IDENT_CURRENT('staffs') As Int)";
-                SqlCommand cmd= new SqlCommand(sql, conn);
+                SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader dreader = cmd.ExecuteReader();
                 dreader.Read();
-                int id = (int)dreader.GetValue(0)+1;
+                int id = (int)dreader.GetValue(0) + 1;
                 return id;
             }
         }

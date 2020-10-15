@@ -9,10 +9,9 @@ namespace Staffs
     {
         static void Main(string[] args)
         {
-            
             string objectselect = ConfigurationManager.AppSettings.Get("StaffDB");
             var objectType = Type.GetType(objectselect);
-            IStaffOperations staff=Activator.CreateInstance(objectType) as IStaffOperations;
+            IStaffOperations staff = Activator.CreateInstance(objectType) as IStaffOperations;
             List<Staffs> StaffList = staff.PopulateList();
             string select;
             do
@@ -37,7 +36,7 @@ namespace Staffs
                         break;
                     case "5":
                         int updateid = StaffOperations.ReturnId();
-                        StaffOperations.UpdateData(updateid,StaffList);
+                        StaffOperations.UpdateData(updateid, StaffList);
                         break;
                     case "9":
                         staff.WriteData(StaffList);
@@ -53,4 +52,3 @@ namespace Staffs
         }
     }
 }
-

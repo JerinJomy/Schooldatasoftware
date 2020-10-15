@@ -11,11 +11,12 @@ namespace Staffs
         public JsonStaffOperations()
         {
             ReturnList();
+
         }
 
         static private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-        private List<Staffs> StaffList {get;set;} 
-   
+        private List<Staffs> StaffList {get;set;}
+
         public List<Staffs> PopulateList()
         {
             return StaffList;
