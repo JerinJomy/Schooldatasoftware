@@ -7,9 +7,10 @@ namespace Staffs
 {
     class Program
     {
+        int abc = 1;
         static void Main(string[] args)
         {
-            string objectselect = ConfigurationManager.AppSettings.Get("StaffDB");
+            string objectselect = ConfigurationManager.AppSettings.Get("JsonStaffOperations");
             var objectType = Type.GetType(objectselect);
             IStaffOperations staff = Activator.CreateInstance(objectType) as IStaffOperations;
             List<Staffs> StaffList = staff.PopulateList();

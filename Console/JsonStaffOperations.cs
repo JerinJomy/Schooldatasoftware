@@ -15,7 +15,7 @@ namespace Staffs
         }
 
         static private readonly JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-        private List<Staffs> StaffList {get;set;}
+        public List<Staffs> StaffList {get;set;}
 
         public List<Staffs> PopulateList()
         {
@@ -33,7 +33,7 @@ namespace Staffs
         {
             if (!File.Exists(ConfigurationManager.AppSettings["Jsonfile"]))
             {
-                TextWriter tw = new StreamWriter(ConfigurationManager.AppSettings["xmlfile"]);
+                TextWriter tw = new StreamWriter(ConfigurationManager.AppSettings["Jsonfile"]);
                 tw.Close();
             }
             try

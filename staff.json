@@ -1,12 +1,12 @@
 [
   {
     "$type": "Staffs.TeachingStaffs, Model",
-    "ClassName": "a",
-    "Subject": "a",
-    "Name": "a",
+    "ClassName": "5th grade",
+    "Subject": "english",
+    "Name": "jerin",
     "StaffType": 1,
-    "Phone": "a",
-    "Email": "a",
+    "Phone": "9400735598",
+    "Email": "jerin@123.com",
     "Id": 1
   },
   {

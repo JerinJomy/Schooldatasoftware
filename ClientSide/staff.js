@@ -1,18 +1,18 @@
 function GetStaff(type) {
   switch (type) {
     case "administrative":
-      var request = 'https://localhost:44386/api/Staffs/?type=';
+      var request = 'https://localhost:44386/Staffdata/?type=';
       request = request + type;
       fetch(request).then((res) => res.json()).then((data) => BuildAdmintable(data))
       break;
 
     case "teaching":
-      var request = 'https://localhost:44386/api/Staffs/?type=';
+      var request = 'https://localhost:44386/Staffdata/?type=';
       request = request + type;
       fetch(request).then((res) => res.json()).then((data) => Buildteachingtable(data))
       break;
     case "support":
-      var request = 'https://localhost:44386/api/Staffs/?type=';
+      var request = 'https://localhost:44386/Staffdata/?type=';
       request = request + type;
       fetch(request).then((res) => res.json()).then((data) => Buildsupporttable(data))
       break;
@@ -136,7 +136,7 @@ function Delete(button) {
   var id = button.getAttribute("data-id")
   var select = confirm("Press ok to delete");
   if (select) {
-    request = "https://localhost:44386/api/Staffs/" + id
+    request = "https://localhost:44386/Staffdata/" + id
     fetch(request, {
       method: 'DELETE'
     }).then(response => {

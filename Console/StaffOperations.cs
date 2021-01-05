@@ -8,7 +8,7 @@ namespace Staffs
     public static class StaffOperations
     {
 
-        private static int IdValue(List<Staffs> StaffList)
+        public static int IdValue(List<Staffs> StaffList)
         {
             int largest = 0;
             if (StaffList.Count == 0)

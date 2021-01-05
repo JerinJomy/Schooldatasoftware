@@ -8,11 +8,11 @@ function SelectForm() {
 }
 function SelectRequest() {
 	if (id == 0) {
-		var request = "https://localhost:44386/api/Staffs/"
+		var request = "https://localhost:44386/Staffdata/"
 		AddandEdit('POST', request);
 	}
 	else {
-		var request = "https://localhost:44386/api/Staffs/" + id
+		var request = "https://localhost:44386/Staffdata/" + id
 		var select = confirm("Press ok to edit");
 		if (select) {
 			AddandEdit('PUT', request)
@@ -23,7 +23,7 @@ function SelectRequest() {
 	}
 }
 function GetStaffById() {
-	var request = 'https://localhost:44386/api/Staffs/' + id
+	var request = 'https://localhost:44386/Staffdata/' + id
 	fetch(request).then((res) => res.json()).then((data) => PopulateForm(data))
 }
 

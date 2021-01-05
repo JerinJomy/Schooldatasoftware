@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace StaffsWebAPI.Controllers
 {
     //[RoutePrefix("api/[controller]")]
-    [Route("api/[controller]")]
+    [Route("Staffdata")]
     public class StaffsController : ControllerBase
     {
         public StaffsController()
